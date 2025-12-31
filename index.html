@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rate Card | Homeless Hippie Studios</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #1a1918;
+            --text-color: #e6e2dd;
+            --accent-color: #d4a373; /* Earthy Gold */
+            --card-bg: #262524;
+            --card-hover: #2f2e2c;
+            --secondary-text: #a8a4a0;
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-sans: 'Outfit', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-serif);
+            font-weight: 400;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 4rem 0 3rem;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .brand-name {
+            font-size: 3.5rem;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
+
+        .sub-brand {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .services-list {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            color: var(--secondary-text);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 1rem;
+        }
+
+        .services-list span {
+            position: relative;
+        }
+        
+        .services-list span:not(:last-child)::after {
+            content: "•";
+            position: absolute;
+            right: -0.9rem;
+            color: var(--accent-color);
+        }
+
+        /* Sections */
+        section {
+            padding: 4rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        section:last-of-type {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+        
+        .section-icon {
+            font-size: 2rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            background: var(--card-hover);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border-color: var(--accent-color);
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--accent-color);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 1rem;
+        }
+
+        .package-name {
+            font-size: 1.5rem;
+            color: var(--text-color);
+            font-family: var(--font-serif);
+        }
+
+        .price {
+            font-size: 1.25rem;
+            color: var(--accent-color);
+            font-weight: 500;
+        }
+
+        .details-list {
+            list-style: none;
+            color: var(--secondary-text);
+        }
+
+        .details-list li {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .details-list li::before {
+            content: "→";
+            margin-right: 0.5rem;
+            color: var(--accent-color);
+            font-family: var(--font-sans);
+        }
+
+        .full-width-card {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        @media (max-width: 768px) {
+            .full-width-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+        }
+
+        /* Non-Monetary Card */
+        .special-card {
+            background: transparent;
+            border: 1px dashed var(--accent-color);
+        }
+        
+        .special-card .price {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Additional Charges */
+        .charges-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .charge-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: var(--card-bg);
+            border-left: 2px solid var(--accent-color);
+        }
+        
+        .charge-name {
+            font-weight: 500;
+        }
+        
+        .charge-cost {
+            color: var(--secondary-text);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #111;
+            padding: 4rem 2rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+        
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+        
+        .contact-link {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .contact-link:hover {
+            color: var(--accent-color);
+        }
+
+        .location {
+            color: var(--secondary-text);
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Specific Styling for Price Variations */
+        .price-sub {
+            font-size: 0.8em;
+            opacity: 0.8;
+            font-weight: 300;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header class="container">
+        <h1 class="brand-name">CukkieTheCreator</h1>
+        <h2 class="sub-brand">Homeless Hippie Studios</h2>
+        <div class="services-list">
+            <span>Creative Direction</span>
+            <span>Styling</span>
+            <span>Modeling</span>
+            <span>Branding</span>
+            <span>Content Production</span>
+        </div>
+    </header>
+
+    <main class="container">
+        
+        <!-- Photography Section -->
+        <section id="photography">
+            <h3 class="section-title"><span class="section-icon">📷</span> Photography Packages</h3>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-header">
+                        <span class="package-name">Basic Shoot</span>
+                        <span class="price">₦40,000</span>
+                    </div>
+                    <ul class="details-list">
+                        <li>5 edited photos</li>
+                        <li>1 outfit</li>
+                        <li>30 minutes duration</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="package-name">Standard Shoot</span>
+                        <span class="price">₦50,000</span>
+                    </div>
+                    <ul class="details-list">
+                        <li>10 edited photos</li>
+                        <li>2 outfits</li>
+                        <li>1 hour duration</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="package-name">Premium Creative</span>
+                        <span class="price">₦80,000</span>
+                    </div>
+                    <ul class="details-list">
+                        <li>20 edited photos</li>
+                        <li>3–4 outfits</li>
+                        <li>Moodboard direction included</li>
+                        <li>Props provided</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Styling Section -->
+        <section id="styling">
+            <h3 class="section-title"><span class="section-icon">👗</span> Styling Services</h3>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-header">
+                        <span class="package-name">Casual Styling</span>
+                        <span class="price">₦40,000</span>
+                    </div>
+                    <ul class="details-list">
+                        <li>1 full look curated</li>
+                        <li>Casual / Streetwear vibe</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="package-name">Event Styling</span>
+                        <span class="price">₦60,000</span>
+                    </div>
+                    <ul class="details-list">
+                        <li>1–2 looks</li>
+                        <li>Accessories included</li>
+                        <li>Fittings included</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="package-name">Editorial / Campaign</span>
+                        <span class="price">From ₦100,000</span>
+                    </div>
+                    <ul class="details-list">
+                        <li>Concept creation</li>
+                        <li>Full looks curation</li>
+                        <li>Brand visual alignment</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Modeling Section -->
+        <section id="modeling">
+            <h3 class="section-title"><span class="section-icon">💃</span> Modeling Services</h3>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-header">
+                        <span class="package-name">Hourly Rate</span>
+                        <span class="price">₦30,000<span class="price-sub">/hr</span></span>
+                    </div>
+                    <ul class="details-list">
+                        <li>Runway</li>
+                        <li>Fittings</li>
+                        <li>Product shots</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="package-name">Half-Day</span>
+                        <span class="price">₦50,000</span>
+                    </div>
+                    <ul class="details-list">
+                        <li>4 hours duration</li>
+                        <li>Multiple looks</li>
+                        <li>Dedicated session</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="package-name">Full-Day</span>
+                        <span class="price">₦100,000</span>
+                    </div>
+                    <ul class="details-list">
+                        <li>8 hours duration</li>
+                        <li>Full day availability</li>
+                        <li>Extensive shooting capability</li>
+                    </ul>
+                </div>
+
+                 <div class="card">
+                    <div class="card-header">
+                        <span class="package-name">Campaign / Lookbook</span>
+                        <span class="price">From ₦150,000</span>
+                    </div>
+                    <ul class="details-list">
+                        <li>Posing direction included</li>
+                        <li>Concept synergy</li>
+                        <li>High-end production fit</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Social Media Section -->
+        <section id="socials">
+            <h3 class="section-title"><span class="section-icon">📱</span> Social Collaboration</h3>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-header">
+                        <span class="package-name">Feed Post</span>
+                        <span class="price">₦40,000</span>
+                    </div>
+                    <ul class="details-list">
+                        <li>1 Instagram Feed Post</li>
+                        <li>High quality imagery</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="package-name">Reel / TikTok</span>
+                        <span class="price">₦45,000</span>
+                    </div>
+                    <ul class="details-list">
+                        <li>1 Instagram Reel or TikTok Video</li>
+                        <li>Creative editing included</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="package-name">3-Story Package</span>
+                        <span class="price">₦35,000</span>
+                    </div>
+                    <ul class="details-list">
+                        <li>3 engaging stories</li>
+                        <li>Tagging & links included</li>
+                    </ul>
+                </div>
+
+                <div class="card full-width-card">
+                    <div>
+                        <div class="card-header" style="border:none; margin-bottom:0; padding-bottom:0;">
+                            <span class="package-name">Full Collab Bundle</span>
+                        </div>
+                        <ul class="details-list">
+                            <li>1 Post + 1 Reel + 3 Stories</li>
+                        </ul>
+                    </div>
+                     <span class="price">₦70,000</span>
+                </div>
+
+                <div class="card special-card full-width-card">
+                     <div>
+                        <div class="card-header" style="border:none; margin-bottom:0; padding-bottom:0;">
+                            <span class="package-name">Product-for-Content</span>
+                        </div>
+                        <ul class="details-list" style="margin-top:0.5rem">
+                            <li>Non-monetary arrangements based on brand fit</li>
+                        </ul>
+                    </div>
+                    <span class="price">Case-by-case</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Additional Charges -->
+        <section id="additional">
+            <h3 class="section-title"><span class="section-icon">📝</span> Additional Charges</h3>
+            <div class="charges-grid">
+                <div class="charge-item">
+                    <span class="charge-name">Extra Edited Photo</span>
+                    <span class="charge-cost">₦2,000 ea</span>
+                </div>
+                <div class="charge-item">
+                    <span class="charge-name">Location Fee</span>
+                    <span class="charge-cost">Client pays</span>
+                </div>
+                <div class="charge-item">
+                    <span class="charge-name">Transportation</span>
+                    <span class="charge-cost">From ₦5,000</span>
+                </div>
+                <div class="charge-item">
+                    <span class="charge-name">Urgent Delivery (24hr)</span>
+                    <span class="charge-cost">+₦10,000</span>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="contact-info">
+            <a href="mailto:chimdinmauduma@gmail.com" class="contact-link">
+                ✉ chimdinmauduma@gmail.com
+            </a>
+            <a href="tel:+2349129564822" class="contact-link">
+                📞 +234 9129564822
+            </a>
+        </div>
+        <p class="location">Location: Nigeria</p>
+        <p style="margin-top:2rem; font-size:0.8rem; opacity:0.5;">© Homeless Hippie Studios. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>
